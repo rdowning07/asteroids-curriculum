@@ -1,5 +1,6 @@
 import pygame
 import math
+from ship import Ship
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -10,23 +11,24 @@ pygame.display.set_caption("Asteroids")
 
 #set up the clock for a decent framerate
 clock = pygame.time.Clock()
+ship = Ship(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 
 #game loop
 running = True
 while running:
-    #check for events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_RIGHT]:
+        ship.rotate(5)
+    if keys[pygame.K_LEFT]:
+        ship.rotate(-5)
 
-
-    #fill the screen with black
     screen.fill((0, 0, 0))
-
-    #update the display
+    ship.draw(screen)
     pygame.display.flip()
-    #cap the framerate at 60fps
-    dt = clock.tick(60) / 1000.0 # Delta time in seconds
+    dt = clock.tick(60) / 1000.0
 
 pygame.quit()
