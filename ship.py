@@ -37,10 +37,21 @@ class Ship:
     def draw(self, screen):
         pygame.draw.polygon(screen, (255, 255, 255), self.get_points())
 
+    def wrap(self):
+        if self.x > SCREEN_WIDTH:
+            self.x = 0
+        if self.x < 0:
+            self.x = SCREEN_WIDTH
+        if self.y > SCREEN_HEIGHT:
+            self.y = 0
+        if self.y < 0:
+            self.y = SCREEN_HEIGHT
+            
     #update(self,dt) method that addes velocity_x *dt to self.x and velocity_y * dt to self.y
     def update(self, dt):
         self.x += self.velocity_x * dt
         self.y += self.velocity_y * dt
+        self.wrap()
 
     #thrust(self, dt) method that adds THRUST * cos(angle) * dt to velocity_x and THRUST * sin(angle) * dt to velocity_y
     # math.cos(math.radians(self.angle - 90))
