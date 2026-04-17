@@ -1,9 +1,7 @@
 import pygame
-import math
 import random
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
-random.uniform(-1, 1)   # random float between -1 and 1
-random.randint(1, 3)    # random integer between 1 and 3
 
 ASTEROID_SPEED = 100
 
@@ -12,9 +10,6 @@ class Asteroid:
         self.x = x
         self.y = y
         self.radius = radius
-
-        self.angle = 0
-        self.size = 20
 
         self.velocity_x = random.uniform(-1, 1) * ASTEROID_SPEED
         self.velocity_y = random.uniform(-1, 1) * ASTEROID_SPEED
@@ -28,7 +23,7 @@ class Asteroid:
             self.y = 0
         if self.y < 0:
             self.y = SCREEN_HEIGHT
-            
+
     def update(self, dt):
         self.x += self.velocity_x * dt
         self.y += self.velocity_y * dt
