@@ -1,5 +1,6 @@
 import pygame
 from ship import Ship
+from asteroid import Asteroid
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 
@@ -10,7 +11,7 @@ pygame.display.set_caption("Asteroids")
 #set up the clock for a decent framerate
 clock = pygame.time.Clock()
 ship = Ship(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-
+asteroids = [Asteroid(200, 200, 40)]
 dt = 0.0
 
 #game loop
@@ -30,6 +31,10 @@ while running:
         ship.thrust(dt)
         
     ship.update(dt)
+
+    for asteroid in asteroids:
+        asteroid.update(dt)
+        asteroid.draw(screen)
 
     screen.fill((0, 0, 0))
     ship.draw(screen)
