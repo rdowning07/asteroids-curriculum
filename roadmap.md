@@ -7,14 +7,25 @@
 ---
 
 ## The Ladder
-Pong → Asteroids → Donkey Kong → Super Mario Bros → Castlevania → Symphony of the Night → Diablo/WoW
+
+```
+Pong → Asteroids → Donkey Kong → Super Mario Bros → Castlevania → Symphony of the Night → Diablo I → Warcraft I → Diablo II/WoW
+```
 
 ---
 
-## 🟢 LEVEL 1: Pong — Complete
+## ✅ LEVEL 1: Pong — Complete
 
 Core game loop, state, collision detection, scoring, paddle and ball physics.
 Repo: https://github.com/rdowning07/pong
+
+- [x] Game loop
+- [x] Variables and state
+- [x] Keyboard input
+- [x] Moving objects
+- [x] Collision detection
+- [x] Scoring
+- [x] Game over and restart
 
 ---
 
@@ -24,41 +35,29 @@ Repo: https://github.com/rdowning07/pong
 
 Motion that isn't just left/right/up/down. Objects rotate. Things spawn and despawn. Lists of objects instead of one or two.
 
-### Skills
+### Skills Checklist
 
-* Delta time — frame-rate independent movement
-* Vectors and 2D math (sin, cos, angles)
-* Classes — Ship, Asteroid, Bullet
-* Rotation
-* Thrust and momentum (velocity accumulates)
-* Wrap-around screen edges
-* Lists of objects (multiple asteroids, multiple bullets)
-* Spawning and destroying objects
-* Collision detection (circle vs circle)
+- [x] Repo setup with pyenv
+- [x] Game loop with delta time
+- [x] Ship class with rotation
+- [x] Thrust and momentum
+- [ ] Screen wrap
+- [ ] Asteroid class with movement
+- [ ] Multiple asteroids in a list
+- [ ] Bullet class
+- [ ] Shooting mechanic
+- [ ] Collision detection (circle vs circle)
+- [ ] Asteroid splitting
+- [ ] Game over state
+- [ ] Score tracking
 
 ### Architecture Concepts
 
-* What is delta time and why does it matter?
-* What is a vector?
-* What is a class and what is an instance?
-* What does it mean to update a list of objects every frame?
-* What is momentum in code?
-
-### Progress
-
-* [x] Repo setup with pyenv
-* [x] Game loop with delta time
-* [x] Ship class with rotation
-* [ ] Thrust and momentum
-* [ ] Screen wrap
-* [ ] Asteroid class with movement
-* [ ] Multiple asteroids in a list
-* [ ] Bullet class
-* [ ] Shooting mechanic
-* [ ] Collision detection
-* [ ] Asteroid splitting
-* [ ] Game over state
-* [ ] Score tracking
+- [x] What is delta time and why does it matter?
+- [x] What is a vector?
+- [x] What is a class and what is an instance?
+- [ ] What does it mean to update a list of objects every frame?
+- [ ] What is momentum in code?
 
 ### Deliverable
 
@@ -70,11 +69,25 @@ Playable Asteroids. Ship rotates and thrusts, shoots bullets, asteroids split on
 
 Gravity, platforms, enemies with simple AI, tilemaps, sprite loading.
 
+- [ ] Gravity and jumping
+- [ ] Platform collision
+- [ ] Tilemaps
+- [ ] Sprite loading
+- [ ] Simple enemy AI
+- [ ] Animation states
+- [ ] Lives system
+
 ---
 
 ## 🔴 LEVEL 4: Super Mario Bros — Not Started
 
 Scrolling camera, multiple enemy types, power-ups, multiple levels.
+
+- [ ] Scrolling camera
+- [ ] Multiple enemy types
+- [ ] Power-up system
+- [ ] Multiple levels with transitions
+- [ ] Sound effects and music
 
 ---
 
@@ -82,17 +95,54 @@ Scrolling camera, multiple enemy types, power-ups, multiple levels.
 
 Connected world, persistent state, inventory, boss fights.
 
+- [ ] Connected rooms and world map
+- [ ] Persistent player state
+- [ ] Inventory system
+- [ ] Complex enemy AI
+- [ ] Boss fights
+
 ---
 
 ## 🔴 LEVEL 6: Symphony of the Night — Not Started
 
 Full Metroidvania. Graduation project for 2D.
 
+- [ ] Full map system
+- [ ] Equipment and stat systems
+- [ ] Spell and ability system
+- [ ] Save system
+- [ ] Enemy variety and AI complexity
+
 ---
 
-## 🔴 LEVEL 7: Diablo / WoW — Far Horizon
+## 🔴 LEVEL 7: Diablo I — Not Started
 
-3D or isometric. New engine. Possibly multiplayer.
+Top-down single player. RPG systems, procedural dungeon generation.
+
+- [ ] Procedural generation
+- [ ] RPG stat systems
+- [ ] Inventory and equipment
+- [ ] Top-down perspective
+- [ ] New engine (Godot or Unity)
+
+---
+
+## 🔴 LEVEL 8: Warcraft I — Not Started
+
+Real-time strategy. Units, resources, buildings, pathfinding, fog of war.
+
+- [ ] Pathfinding
+- [ ] Unit state management
+- [ ] Resource systems
+- [ ] Building and production queues
+- [ ] Fog of war
+- [ ] RTS camera and unit selection
+
+---
+
+## 🔴 LEVEL 9: Diablo II / WoW — Far Horizon
+
+3D or isometric 3D. Networking if multiplayer. Open ended.
 
 ---
 
@@ -108,4 +158,3 @@ Full Metroidvania. Graduation project for 2D.
 
 *Started: April 2026*
 *Target: June 2027*
-
