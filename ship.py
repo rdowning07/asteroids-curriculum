@@ -1,5 +1,6 @@
 import pygame
 import math
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 THRUST = 200
 class Ship:
@@ -47,4 +48,4 @@ class Ship:
     def thrust(self, dt):
         self.velocity_x += THRUST * math.cos(math.radians(self.angle - 90)) * dt
         self.velocity_y += THRUST * math.sin(math.radians(self.angle - 90)) * dt
-        
+
