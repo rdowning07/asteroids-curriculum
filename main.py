@@ -31,13 +31,14 @@ while running:
         ship.thrust(dt)
         
     ship.update(dt)
-
     for asteroid in asteroids:
         asteroid.update(dt)
-        asteroid.draw(screen)
 
     screen.fill((0, 0, 0))
     ship.draw(screen)
+    for asteroid in asteroids:
+        asteroid.draw(screen)
+
     pygame.display.flip()
     dt = clock.tick(60) / 1000.0
 
