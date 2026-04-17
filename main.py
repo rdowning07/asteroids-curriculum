@@ -1,5 +1,4 @@
 import pygame
-import math
 from ship import Ship
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
@@ -31,15 +30,6 @@ while running:
         ship.thrust(dt)
         
     ship.update(dt)
-
-    if ship.x > SCREEN_WIDTH:
-        ship.x = 0
-    if ship.x < 0:
-        ship.x = SCREEN_WIDTH
-    if ship.y > SCREEN_HEIGHT:
-        ship.y = 0
-    if ship.y < 0:
-        ship.y = SCREEN_HEIGHT
 
     screen.fill((0, 0, 0))
     ship.draw(screen)
