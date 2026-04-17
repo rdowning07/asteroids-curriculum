@@ -1,6 +1,7 @@
 import pygame
 import math
 
+THRUST = 200
 class Ship:
     def __init__(self, x, y):
         self.x = x
@@ -8,6 +9,9 @@ class Ship:
 
         self.angle = 0
         self.size = 20
+
+        self.velocity_x = 0.0
+        self.velocity_y = 0.0
 
     def rotate(self, direction):
         self.angle += direction
@@ -32,3 +36,15 @@ class Ship:
     def draw(self, screen):
         pygame.draw.polygon(screen, (255, 255, 255), self.get_points())
 
+    #update(self,dt) method that addes velocity_x *dt to self.x and velocity_y * dt to self.y
+    def update(self, dt):
+        self.x += self.velocity_x * dt
+        self.y += self.velocity_y * dt
+
+    #thrust(self, dt) method that adds THRUST * cos(angle) * dt to velocity_x and THRUST * sin(angle) * dt to velocity_y
+    # math.cos(math.radians(self.angle - 90))
+    # math.sin(math.radians(self.angle - 90))
+    def thrust(self, dt):
+        self.velocity_x += THRUST * math.cos(math.radians(self.angle - 90)) * dt
+        self.velocity_y += THRUST * math.sin(math.radians(self.angle - 90)) * dt
+        

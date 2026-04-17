@@ -13,6 +13,8 @@ pygame.display.set_caption("Asteroids")
 clock = pygame.time.Clock()
 ship = Ship(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
 
+dt = 0.0
+
 #game loop
 running = True
 while running:
@@ -25,6 +27,11 @@ while running:
         ship.rotate(5)
     if keys[pygame.K_LEFT]:
         ship.rotate(-5)
+
+    if keys[pygame.K_UP]:
+        ship.thrust(dt)
+        
+    ship.update(dt)
 
     screen.fill((0, 0, 0))
     ship.draw(screen)
