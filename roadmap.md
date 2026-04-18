@@ -41,8 +41,8 @@ Motion that isn't just left/right/up/down. Objects rotate. Things spawn and desp
 - [x] Game loop with delta time
 - [x] Ship class with rotation
 - [x] Thrust and momentum
-- [ ] Screen wrap
-- [ ] Asteroid class with movement
+- [x] Screen wrap
+- [x] Asteroid class with movement
 - [ ] Multiple asteroids in a list
 - [ ] Bullet class
 - [ ] Shooting mechanic
