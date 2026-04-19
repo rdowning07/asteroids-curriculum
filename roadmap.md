@@ -45,10 +45,10 @@ Motion that isn't just left/right/up/down. Objects rotate. Things spawn and desp
 - [x] Asteroid class with movement
 - [x] Multiple asteroids in a list
 - [x] Bullet class
-- [ ] Shooting mechanic
-- [ ] Collision detection (circle vs circle)
+- [x] Shooting mechanic
+- [x] Collision detection (circle vs circle)
 - [ ] Asteroid splitting
-- [ ] Game over state
+- [x] Game over state
 - [ ] Score tracking
 
 ### Architecture Concepts
