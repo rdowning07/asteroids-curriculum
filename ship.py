@@ -12,6 +12,7 @@ class Ship:
 
         self.angle = 0
         self.size = 20
+        self.radius = 15
 
         self.velocity_x = 0.0
         self.velocity_y = 0.0

@@ -16,6 +16,33 @@ asteroids = [Asteroid.spawn() for _ in range(ASTEROID_COUNT)]
 bullets = []
 dt = 0.0
 
+def check_bullet_asteroid_collisions(bullets, asteroids):
+    # loop over copies of both lists
+    # calculate distance between each bullet and each asteroid
+    # if distance < bullet.radius + asteroid.radius, remove both
+    for bullet in bullets[:]:
+        for asteroid in asteroids[:]:
+            dx = bullet.x - asteroid.x
+            dy = bullet.y - asteroid.y
+            distance = (dx**2 + dy**2) ** 0.5
+            if distance < bullet.radius + asteroid.radius:
+                bullets.remove(bullet)
+                asteroids.remove(asteroid)
+                break  # stop checking this bullet against other asteroids
+
+def check_ship_asteroid_collisions(ship, asteroids):
+    # loop over asteroids
+    # calculate distance between ship and asteroid
+    # if distance < ship.radius + asteroid.radius, return True
+    # return False at the end
+    for asteroid in asteroids:
+        dx = ship.x - asteroid.x
+        dy = ship.y - asteroid.y
+        distance = (dx**2 + dy**2) ** 0.5
+        if distance < ship.radius + asteroid.radius:
+            return True
+    return False
+
 #game loop
 running = True
 while running:
@@ -42,6 +69,10 @@ while running:
         asteroid.update(dt)
     for bullet in bullets:
         bullet.update(dt)
+
+    check_bullet_asteroid_collisions(bullets, asteroids)
+    if check_ship_asteroid_collisions(ship, asteroids):
+        running = False
 
     for bullet in bullets[:]:       # [:] makes a copy to iterate over
         if bullet.is_offscreen():
