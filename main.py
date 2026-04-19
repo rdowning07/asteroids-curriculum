@@ -11,10 +11,9 @@ pygame.display.set_caption("Asteroids")
 
 #set up the clock for a decent framerate
 clock = pygame.time.Clock()
-ship = Ship(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-asteroids = [Asteroid.spawn() for _ in range(ASTEROID_COUNT)]
-bullets = []
-dt = 0.0
+font = pygame.font.Font(None, 64)
+font_small = pygame.font.Font(None, 32)
+
 
 def check_bullet_asteroid_collisions(bullets, asteroids):
     # loop over copies of both lists
@@ -30,6 +29,7 @@ def check_bullet_asteroid_collisions(bullets, asteroids):
                 asteroids.remove(asteroid)
                 break  # stop checking this bullet against other asteroids
 
+
 def check_ship_asteroid_collisions(ship, asteroids):
     # loop over asteroids
     # calculate distance between ship and asteroid
@@ -43,47 +43,83 @@ def check_ship_asteroid_collisions(ship, asteroids):
             return True
     return False
 
-#game loop
+
+def reset_game():
+    ship = Ship(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+    asteroids = [Asteroid.spawn() for _ in range(ASTEROID_COUNT)]
+    bullets = []
+    return ship, asteroids, bullets
+
+
+ship, asteroids, bullets = reset_game()
+dt = 0.0
 running = True
+game_state = "playing"
+
+#game loop
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_RIGHT]:
-        ship.rotate(5)
-    if keys[pygame.K_LEFT]:
-        ship.rotate(-5)
 
-    if keys[pygame.K_UP]:
-        ship.thrust(dt)
+    if game_state == "playing":
+        # input
+        if keys[pygame.K_RIGHT]:
+            ship.rotate(5)
+        if keys[pygame.K_LEFT]:
+            ship.rotate(-5)
+        if keys[pygame.K_UP]:
+            ship.thrust(dt)
+        if keys[pygame.K_SPACE]:
+            bullet = ship.shoot(dt)
+            if bullet is not None:
+                bullets.append(bullet)
 
-    if keys[pygame.K_SPACE]:
-        bullet = ship.shoot(dt)
-        if bullet is not None:
-            bullets.append(bullet)
+        # updates
+        ship.update(dt)
+        for asteroid in asteroids:
+            asteroid.update(dt)
+        for bullet in bullets:
+            bullet.update(dt)
 
-    ship.update(dt)
-    for asteroid in asteroids:
-        asteroid.update(dt)
-    for bullet in bullets:
-        bullet.update(dt)
+        # collision checks
+        check_bullet_asteroid_collisions(bullets, asteroids)
+        if check_ship_asteroid_collisions(ship, asteroids):
+            game_state = "game_over"
 
-    check_bullet_asteroid_collisions(bullets, asteroids)
-    if check_ship_asteroid_collisions(ship, asteroids):
-        running = False
+        for bullet in bullets[:]:
+            if bullet.is_offscreen():
+                bullets.remove(bullet)
 
-    for bullet in bullets[:]:       # [:] makes a copy to iterate over
-        if bullet.is_offscreen():
-            bullets.remove(bullet)  # ← modifies the original, safe
+    elif game_state == "game_over":
+        # draw game over text
+        # check R and Q
+        if keys[pygame.K_r]:
+            ship, asteroids, bullets = reset_game()
+            game_state = "playing"
+        elif keys[pygame.K_q]:
+            running = False
 
-    screen.fill((0, 0, 0))
-    ship.draw(screen)
-    for asteroid in asteroids:
-        asteroid.draw(screen)
-    for bullet in bullets:
-        bullet.draw(screen)
+    screen.fill((0, 0, 0))  # NOTE: this goes before drawing
+
+    if game_state == "playing":
+        # draw ship, asteroids, bullets
+        ship.draw(screen)
+        for asteroid in asteroids:
+            asteroid.draw(screen)
+        for bullet in bullets:
+            bullet.draw(screen)
+    elif game_state == "game_over":
+        # blit text surfaces
+        text = font.render("Game Over", True, (255, 255, 255))
+        text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
+        prompt_text = "Press R to restart or Q to quit"
+        prompt_surface = font_small.render(prompt_text, True, (255, 255, 255))
+        prompt_x = (SCREEN_WIDTH - prompt_surface.get_width()) // 2
+        screen.blit(text, text_rect)
+        screen.blit(prompt_surface, (prompt_x, SCREEN_HEIGHT // 2 + 50))
 
     pygame.display.flip()
     dt = clock.tick(60) / 1000.0
