@@ -19,8 +19,9 @@ class Ship:
         self.angle += direction
 
     def shoot(self):
-        #create a new bullet at the ship's position and angle
-        return Bullet(self.x, self.y, self.angle)
+        nose_x = self.x + math.cos(math.radians(self.angle - 90)) * self.size
+        nose_y = self.y + math.sin(math.radians(self.angle - 90)) * self.size
+        return Bullet(nose_x, nose_y, self.angle)
 
     def get_points(self):
         # Define the ship's points relative to its center
@@ -30,9 +31,6 @@ class Ship:
             (self.size / 2, self.size / 2)   # Right wing
         ]
 
-        nose_x = self.x + math.cos(math.radians(self.angle - 90)) * self.size
-        nose_y = self.y + math.sin(math.radians(self.angle - 90)) * self.size
-        
         # Rotate and translate the points based on the ship's angle and position
         rotated_points = []
         for px, py in points:

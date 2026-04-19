@@ -1,6 +1,6 @@
 import pygame
 import random
-from asteroid import ASTEROID_SPEED
+import math
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 
@@ -13,16 +13,17 @@ class Bullet:
         self.radius = 5
         self.angle = angle
 
-        self.velocity_x = pygame.math.Vector2(BULLET_SPEED, 0).rotate(self.angle).x
-        self.velocity_y = pygame.math.Vector2(BULLET_SPEED, 0).rotate(self.angle).y
+        velocity = pygame.math.Vector2(BULLET_SPEED, 0).rotate(self.angle)
+        self.velocity_x = math.cos(math.radians(self.angle - 90)) * BULLET_SPEED
+        self.velocity_y = math.sin(math.radians(self.angle - 90)) * BULLET_SPEED
     
-    is offscreen(self):
+    def is_offscreen(self):
         return self.x < 0 or self.x > SCREEN_WIDTH or self.y < 0 or self.y > SCREEN_HEIGHT
 
-    update(self, dt):
+    def update(self, dt):
         self.x += self.velocity_x * dt
         self.y += self.velocity_y * dt
     
-    draw(self, screen):
+    def draw(self, screen):
         pygame.draw.circle(screen, (255, 255, 255), (int(self.x), int(self.y)), self.radius)
     
