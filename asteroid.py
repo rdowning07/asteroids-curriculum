@@ -31,3 +31,23 @@ class Asteroid:
     
     def draw(self, screen):
         pygame.draw.circle(screen, (255, 255, 255), (int(self.x), int(self.y)), self.radius)
+
+    @staticmethod
+    def spawn()
+        #calculate random edge position
+        #return a new asteroid at that position
+        edge = random.choice(['top', 'bottom', 'left', 'right'])
+        if edge == 'top':
+            x = random.randint(0, SCREEN_WIDTH)
+            y = 0
+        elif edge == 'bottom':
+            x = random.randint(0, SCREEN_WIDTH)
+            y = SCREEN_HEIGHT
+        elif edge == 'left':
+            x = 0
+            y = random.randint(0, SCREEN_HEIGHT)
+        else:  # edge == 'right'
+            x = SCREEN_WIDTH
+            y = random.randint(0, SCREEN_HEIGHT)
+        return Asteroid(x, y, ASTEROID_RADIUS)
+    
