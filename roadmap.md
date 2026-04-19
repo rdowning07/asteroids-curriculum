@@ -47,17 +47,17 @@ Motion that isn't just left/right/up/down. Objects rotate. Things spawn and desp
 - [x] Bullet class
 - [x] Shooting mechanic
 - [x] Collision detection (circle vs circle)
-- [ ] Asteroid splitting
+- [x] Asteroid splitting
 - [x] Game over state
-- [ ] Score tracking
+- [x] Score tracking
 
 ### Architecture Concepts
 
 - [x] What is delta time and why does it matter?
 - [x] What is a vector?
 - [x] What is a class and what is an instance?
-- [ ] What does it mean to update a list of objects every frame?
-- [ ] What is momentum in code?
+- [x] What does it mean to update a list of objects every frame?
+- [x] What is momentum in code?
 
 ### Deliverable
 
