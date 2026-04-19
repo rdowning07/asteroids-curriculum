@@ -17,20 +17,35 @@ The goal is first-principles understanding: knowing not just what the code does,
 
 ### `main.py`
 
-The game entry point. Initializes pygame, creates the window, runs the game loop.
+The game entry point. Initializes pygame, creates the window, runs the game loop. Contains collision detection functions, game state management, and score tracking.
 
 ### `ship.py`
 
-The player ship. A triangle drawn with `pygame.draw.polygon()` using calculated points. Rotates based on keyboard input.
+The player ship. A triangle drawn with `pygame.draw.polygon()` using calculated points. Rotates, thrusts, and shoots bullets. Wraps around screen edges.
+
+### `asteroid.py`
+
+Spawns at random screen edges, moves in a straight line, wraps around edges, and splits into smaller asteroids when hit.
+
+### `bullet.py`
+
+Spawns at the ship's nose, travels in the direction the ship is pointing, and is removed when it leaves the screen.
+
+### `constants.py`
+
+Shared constants for screen dimensions, asteroid sizing, and score values.
 
 **The game loop**
+
+```
 while running:
-handle input      ← quit, keypresses
-update state      ← rotate ship, move objects
-screen.fill()     ← wipe canvas black
-draw everything   ← ship, asteroids, bullets
-display.flip()    ← swap back buffer to screen
-dt = clock.tick() ← cap at 60fps, calculate delta time
+    handle input      ← quit, keypresses
+    update state      ← rotate ship, move objects
+    screen.fill()     ← wipe canvas black
+    draw everything   ← ship, asteroids, bullets
+    display.flip()    ← swap back buffer to screen
+    dt = clock.tick() ← cap at 60fps, calculate delta time
+```
 
 ---
 
@@ -58,18 +73,66 @@ Takes a list of (x, y) points and fills the pixels between them. The ship's thre
 
 ---
 
+## Level 2: Asteroids — Technical Milestones
+
+### Architectural Patterns
+
+**Static Factory Methods:** Implemented `Asteroid.spawn()` to encapsulate complex instantiation logic (randomized edge spawning) within the class, keeping the main loop clean.
+
+**Decoupled Game State:** Transitioned to a state-driven architecture (`playing` vs. `game_over`). This allows for non-destructive resets and cleanly separates the "Input/Update" logic from the "Menu/Restart" logic.
+
+**Multiple Return Values:** Leveraged Python's tuple unpacking in `reset_game()` to atomically reset the ship, asteroid field, and bullet lists in a single call.
+
+### Memory & List Management
+
+**Safe Iteration with Slices:** Used the `[:]` slice operator for bullet and asteroid lists. This creates a shallow copy for iteration, preventing the "skipping index" bug that occurs when removing objects from a collection while looping through it.
+
+**Dynamic Cleanup:** Implemented `is_offscreen()` checks to prune the `bullets` list, preventing accumulation of off-screen projectiles.
+
+### Physics & Collision Logic
+
+**Pythagorean Distance Formula:** Implemented circular collision detection using:
+
+```
+distance = sqrt((x2 - x1)^2 + (y2 - y1)^2)
+```
+
+Collisions are triggered when the distance is less than the sum of the two radii (`r1 + r2`), providing more accurate game feel than simple bounding boxes.
+
+**Hierarchical Splitting:** Developed a `split()` method that uses a base-case check (`ASTEROID_MIN_RADIUS`) to either destroy an object or spawn two smaller fragments at half the radius.
+
+### Systems & UI
+
+**Timer-Based Cooldowns:** Replaced frame-counting with a delta-time (`dt`) countdown for `shoot_cooldown`. This ensures the rate of fire remains consistent regardless of frame rate.
+
+**Dictionary Mapping:** Used a dictionary to map asteroid radii to score constants, replacing long `if/elif` chains with a clean O(1) lookup.
+
+**Text Rendering:** Integrated `pygame.font` for dynamic score tracking and UI prompts using `screen.blit`.
+
+---
+
 ## Current State
 
 * Pygame window opens and closes cleanly
 * Game loop runs at 60fps with delta time
 * Ship renders as a white triangle at screen center
 * Ship rotates left and right with arrow keys
+* Ship thrusts and drifts with momentum using delta time
+* Screen wrap on all edges
+* Asteroids spawn from random edges and split into smaller pieces when shot
+* Bullets with fire rate cooldown
+* Circle vs circle collision detection
+* Score display with point values by asteroid size
+* Game over screen with restart and quit
 
 ---
 
 ## How to Run
+
+```
 pyenv shell 3.11.9
 python main.py
+```
 
 ---
 
