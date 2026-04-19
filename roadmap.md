@@ -44,7 +44,7 @@ Motion that isn't just left/right/up/down. Objects rotate. Things spawn and desp
 - [x] Screen wrap
 - [x] Asteroid class with movement
 - [x] Multiple asteroids in a list
-- [ ] Bullet class
+- [x] Bullet class
 - [ ] Shooting mechanic
 - [ ] Collision detection (circle vs circle)
 - [ ] Asteroid splitting
