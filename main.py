@@ -1,7 +1,7 @@
 import pygame
 from ship import Ship
 from asteroid import Asteroid
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, ASTEROID_COUNT
 
 
 pygame.init()

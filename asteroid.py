@@ -1,6 +1,6 @@
 import pygame
 import random
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, ASTEROID_RADIUS
 
 
 ASTEROID_SPEED = 100
@@ -33,7 +33,7 @@ class Asteroid:
         pygame.draw.circle(screen, (255, 255, 255), (int(self.x), int(self.y)), self.radius)
 
     @staticmethod
-    def spawn()
+    def spawn():
         #calculate random edge position
         #return a new asteroid at that position
         edge = random.choice(['top', 'bottom', 'left', 'right'])
