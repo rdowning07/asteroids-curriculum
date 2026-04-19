@@ -1,5 +1,6 @@
 import pygame
 import math
+from bullet import Bullet
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 THRUST = 200
@@ -17,6 +18,10 @@ class Ship:
     def rotate(self, direction):
         self.angle += direction
 
+    def shoot(self):
+        #create a new bullet at the ship's position and angle
+        return Bullet(self.x, self.y, self.angle)
+
     def get_points(self):
         # Define the ship's points relative to its center
         points = [
@@ -24,6 +29,10 @@ class Ship:
             (-self.size / 2, self.size / 2),  # Left wing
             (self.size / 2, self.size / 2)   # Right wing
         ]
+
+        nose_x = self.x + math.cos(math.radians(self.angle - 90)) * self.size
+        nose_y = self.y + math.sin(math.radians(self.angle - 90)) * self.size
+        
         # Rotate and translate the points based on the ship's angle and position
         rotated_points = []
         for px, py in points:
@@ -46,7 +55,7 @@ class Ship:
             self.y = 0
         if self.y < 0:
             self.y = SCREEN_HEIGHT
-            
+
     #update(self,dt) method that addes velocity_x *dt to self.x and velocity_y * dt to self.y
     def update(self, dt):
         self.x += self.velocity_x * dt
