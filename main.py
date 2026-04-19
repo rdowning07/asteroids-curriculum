@@ -11,7 +11,7 @@ pygame.display.set_caption("Asteroids")
 #set up the clock for a decent framerate
 clock = pygame.time.Clock()
 ship = Ship(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
-asteroids = [Asteroid(200, 200, 40)]
+asteroids = [Asteroid.spawn() for _ in range(ASTEROID_COUNT)]
 dt = 0.0
 
 #game loop
