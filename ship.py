@@ -21,7 +21,7 @@ class Ship:
     def rotate(self, direction):
         self.angle += direction
 
-    def shoot(self):
+    def shoot(self, dt):
         self.shoot_cooldown -= dt
         if self.shoot_cooldown <= 0:
             self.shoot_cooldown = SHOOT_COOLDOWN

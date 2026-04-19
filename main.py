@@ -33,8 +33,10 @@ while running:
         ship.thrust(dt)
 
     if keys[pygame.K_SPACE]:
-        bullets.append(ship.shoot())
-        
+        bullet = ship.shoot(dt)
+        if bullet is not None:
+            bullets.append(bullet)
+
     ship.update(dt)
     for asteroid in asteroids:
         asteroid.update(dt)
