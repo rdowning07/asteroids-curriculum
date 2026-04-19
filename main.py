@@ -16,9 +16,6 @@ font_small = pygame.font.Font(None, 32)
 
 
 def check_bullet_asteroid_collisions(bullets, asteroids):
-    # loop over copies of both lists
-    # calculate distance between each bullet and each asteroid
-    # if distance < bullet.radius + asteroid.radius, remove both
     for bullet in bullets[:]:
         for asteroid in asteroids[:]:
             dx = bullet.x - asteroid.x
@@ -27,8 +24,8 @@ def check_bullet_asteroid_collisions(bullets, asteroids):
             if distance < bullet.radius + asteroid.radius:
                 bullets.remove(bullet)
                 asteroids.remove(asteroid)
-                break  # stop checking this bullet against other asteroids
-
+                asteroids.extend(asteroid.split())
+                break
 
 def check_ship_asteroid_collisions(ship, asteroids):
     # loop over asteroids
@@ -85,6 +82,7 @@ while running:
             bullet.update(dt)
 
         # collision checks
+        # update to call asteroid.split() and extend the asteroids list with the result if there is a collision
         check_bullet_asteroid_collisions(bullets, asteroids)
         if check_ship_asteroid_collisions(ship, asteroids):
             game_state = "game_over"
