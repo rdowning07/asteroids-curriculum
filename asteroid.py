@@ -1,6 +1,6 @@
 import pygame
 import random
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT, ASTEROID_RADIUS
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, ASTEROID_RADIUS, ASTEROID_MIN_RADIUS, ASTEROID_SPEED
 
 
 ASTEROID_SPEED = 100
@@ -23,6 +23,14 @@ class Asteroid:
             self.y = 0
         if self.y < 0:
             self.y = SCREEN_HEIGHT
+    
+    def split(self):
+        if self.radius <= ASTEROID_MIN_RADIUS:
+            return []
+        new_radius = self.radius // 2
+        asteroid_1 = Asteroid(self.x, self.y, new_radius)
+        asteroid_2 = Asteroid(self.x, self.y, new_radius)
+        return [asteroid_1, asteroid_2]
 
     def update(self, dt):
         self.x += self.velocity_x * dt
