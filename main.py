@@ -2,7 +2,7 @@ import pygame
 from ship import Ship
 from bullet import Bullet
 from asteroid import Asteroid
-from constants import SCREEN_WIDTH, SCREEN_HEIGHT, ASTEROID_COUNT
+from constants import SCREEN_WIDTH, SCREEN_HEIGHT, ASTEROID_COUNT, SCORE_LARGE, SCORE_MEDIUM, SCORE_SMALL
 
 
 pygame.init()
@@ -16,6 +16,8 @@ font_small = pygame.font.Font(None, 32)
 
 
 def check_bullet_asteroid_collisions(bullets, asteroids):
+    total_points = 0
+    point_values = {40: SCORE_LARGE, 20: SCORE_MEDIUM, 10: SCORE_SMALL}
     for bullet in bullets[:]:
         for asteroid in asteroids[:]:
             dx = bullet.x - asteroid.x
@@ -25,7 +27,9 @@ def check_bullet_asteroid_collisions(bullets, asteroids):
                 bullets.remove(bullet)
                 asteroids.remove(asteroid)
                 asteroids.extend(asteroid.split())
+                total_points +=point_values.get(asteroid.radius, 0)
                 break
+    return total_points
 
 def check_ship_asteroid_collisions(ship, asteroids):
     # loop over asteroids
@@ -52,6 +56,7 @@ ship, asteroids, bullets = reset_game()
 dt = 0.0
 running = True
 game_state = "playing"
+score = 0
 
 #game loop
 while running:
@@ -73,6 +78,9 @@ while running:
             bullet = ship.shoot(dt)
             if bullet is not None:
                 bullets.append(bullet)
+        
+        #point scoring
+        score += check_bullet_asteroid_collisions(bullets, asteroids)
 
         # updates
         ship.update(dt)
@@ -83,7 +91,6 @@ while running:
 
         # collision checks
         # update to call asteroid.split() and extend the asteroids list with the result if there is a collision
-        check_bullet_asteroid_collisions(bullets, asteroids)
         if check_ship_asteroid_collisions(ship, asteroids):
             game_state = "game_over"
 
@@ -109,6 +116,8 @@ while running:
             asteroid.draw(screen)
         for bullet in bullets:
             bullet.draw(screen)
+        score_surface = font_small.render(f"Score: {score}", True, (255, 255, 255))
+        screen.blit(score_surface, (10, 10))
     elif game_state == "game_over":
         # blit text surfaces
         text = font.render("Game Over", True, (255, 255, 255))
