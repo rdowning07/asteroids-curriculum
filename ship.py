@@ -4,6 +4,7 @@ from bullet import Bullet
 from constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
 THRUST = 200
+SHOOT_COOLDOWN = 0.3
 class Ship:
     def __init__(self, x, y):
         self.x = x
@@ -15,13 +16,19 @@ class Ship:
         self.velocity_x = 0.0
         self.velocity_y = 0.0
 
+        self.shoot_cooldown = 0.0
+
     def rotate(self, direction):
         self.angle += direction
 
     def shoot(self):
-        nose_x = self.x + math.cos(math.radians(self.angle - 90)) * self.size
-        nose_y = self.y + math.sin(math.radians(self.angle - 90)) * self.size
-        return Bullet(nose_x, nose_y, self.angle)
+        self.shoot_cooldown -= dt
+        if self.shoot_cooldown <= 0:
+            self.shoot_cooldown = SHOOT_COOLDOWN
+            nose_x = self.x + math.cos(math.radians(self.angle - 90)) * self.size
+            nose_y = self.y + math.sin(math.radians(self.angle - 90)) * self.size
+            return Bullet(nose_x, nose_y, self.angle)
+        return None
 
     def get_points(self):
         # Define the ship's points relative to its center
